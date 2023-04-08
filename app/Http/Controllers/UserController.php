@@ -18,14 +18,6 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(UserRequest $request)
@@ -49,19 +41,52 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserRequest $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $validated = $request->validated(); //checks the validation
+ 
+        $user->name = $validated['name']; //set the new name 
+ 
+        $user->save(); 
+
+        return $user;
+
+    }
+
+     /**
+     * Update the email of the specified resource in storage.
+     */
+    public function email(UserRequest $request, string $id)
+    { 
+        $user = User::findOrFail($id);
+
+        $validated = $request->validated(); //checks the validation
+ 
+        $user->email = $validated['email']; //set the new email
+ 
+        $user->save(); 
+
+        return $user;
+    }
+
+     /**
+     * Update the password of the specified resource in storage.
+     */
+    public function password(UserRequest $request, string $id)
+    {
+        $user = User::findOrFail($id);
+
+        $validated = $request->validated(); //checks the validation
+ 
+        $user->password = Hash::make($validated['password']); //set the new password
+ 
+        $user->save(); 
+
+        return $user;
     }
 
     /**
@@ -75,4 +100,5 @@ class UserController extends Controller
 
         return $user;
     }
+
 }
