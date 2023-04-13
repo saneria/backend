@@ -81,8 +81,10 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $validated = $request->validated(); //checks the validation
+
+        // $user->password = $validated['password']; => password is not encrypted
  
-        $user->password = Hash::make($validated['password']); //set the new password
+        $user->password = Hash::make($validated['password']); //set the new password, HASH - ENCRYPTS THE PASSWORD 
  
         $user->save(); 
 
