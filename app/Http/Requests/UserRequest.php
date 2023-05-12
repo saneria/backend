@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class UserRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Determine if the user is authorized to make this request. 
      */
     public function authorize(): bool
     {
@@ -21,7 +21,13 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        if(request() ->routeIs('user.store')){
+        if(request() ->routeIs('user.login')){ //login
+            return [
+                'email'     => 'required|string|email|max:255',
+                'password'  => 'required|min:8|',
+            ];
+        }
+        else if(request() ->routeIs('user.store')){ //registration 
             return [
                 'name'      => 'required|string|max:255',
                 'email'     => 'required|string|email|unique:App\Models\User,email|max:255',
