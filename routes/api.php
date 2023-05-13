@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CarouselItemsController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\Api\UserController;
 
@@ -28,6 +29,7 @@ Route::post('/user',  [UserController::class, 'store'])->name('user.store');
 Route::middleware(['auth:sanctum'])->group(function () {
 Route::post('/logout',[ AuthController::class, 'logout']);
 
+//admin API's
     Route::controller(CarouselItemsController::class)->group(function () {
         Route::get('/carousel',             'index');
         Route::get('/carousel/{id}',        'show');
@@ -45,6 +47,11 @@ Route::post('/logout',[ AuthController::class, 'logout']);
         Route::put('/user/image/{id}',      'image')->name('user.image');
         Route::delete('/user/{id}',         'destroy'); 
     });
+
+    //user specific API's
+    Route::get('/profile/show',         [ProfileController::class, 'show']); //based sa token
+    Route::put('/profile/image',        [ProfileController::class, 'image'])->name('profile.image'); //based sa token
+
 });
 
 /*Route::get('/messages', [MessagesController::class, 'index']);
