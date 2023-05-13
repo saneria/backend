@@ -49,5 +49,10 @@ class UserRequest extends FormRequest
                 'password'  => 'required|confirmed|min:8|',
             ];
         }
+        else if(request() ->routeIs('user.image')){
+            return [
+                'image'     => 'required|image|mimes:png,jpg,bmp|max:2048',
+            ];
+        }
     } 
 }

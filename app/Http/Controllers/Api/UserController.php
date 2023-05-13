@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -103,4 +105,25 @@ class UserController extends Controller
         return $user;
     }
 
+     /**
+     * Update the image of specified resource from storage.
+     */
+    public function image(UserRequest $request, string $id)
+    {
+        $user = User::findOrFail($id); 
+
+        if ( !is_null ($user->image)) { //check first if naa then update if naa
+            Storage::disk('public')->delete ($user->image);
+        }
+
+        $user->image = $request->file('image')->storePublicly('images', 'public');
+
+        $user->save(); 
+
+        return $user;
+    } 
+
+
 }
+
+   

@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CarouselItemsController;
 use App\Http\Controllers\MessagesController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +42,7 @@ Route::post('/logout',[ AuthController::class, 'logout']);
         Route::put('/user/{id}',            'update')->name('user.update');
         Route::put('/user/email/{id}',      'email')->name('user.email');
         Route::put('/user/password/{id}',   'password')->name('user.password');
+        Route::put('/user/image/{id}',      'image')->name('user.image');
         Route::delete('/user/{id}',         'destroy'); 
     });
 });
