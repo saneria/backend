@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\AIController;
 use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CarouselItemsController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\PromptsController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\Api\UserController;
 
@@ -22,12 +24,22 @@ use App\Http\Controllers\Api\UserController;
 //public API's
 Route::post('/login', [AuthController::class, 'login'])->name('user.login');
 Route::post('/user',  [UserController::class, 'store'])->name('user.store');
+
+// prompts API
+Route::post('/prompts',[PromptsController::class, 'store']);
+
+
+//OCR API
+Route::post('/ocr', [AIController::class, 'ocr'])->name('ocr.image '); 
+
     
-
-
 //private API's
 Route::middleware(['auth:sanctum'])->group(function () {
-Route::post('/logout',[ AuthController::class, 'logout']);
+    Route::post('/logout',[ AuthController::class, 'logout']);
+
+    Route::get('/prompts',[PromptsController::class, 'index']);
+    Route::delete('/prompts/{id}',[PromptsController::class, 'destroy']);
+    Route::delete('/prompts',[PromptsController::class, 'clear']);
 
 //admin API's
     Route::controller(CarouselItemsController::class)->group(function () {
